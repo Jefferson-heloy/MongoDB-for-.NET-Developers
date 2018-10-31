@@ -51,7 +51,7 @@ namespace M101DotNet.WebApp.Controllers
             // Insert the post into the posts collection
             var post = new Post
             {
-                Date = DateTime.UtcNow,
+                CreatedAtUtc = DateTime.UtcNow,
                 Title = model.Title,
                 Content = model.Content,
                 Author = User.Identity.Name
@@ -104,7 +104,7 @@ namespace M101DotNet.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> NewComment(NewCommentModel model)
+        public async Task<ActionResult> Comments(NewCommentModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -116,26 +116,27 @@ namespace M101DotNet.WebApp.Controllers
             // add a comment to the post identified by model.PostId.
             // you can get the author from "this.User.Identity.Name"
 
-            var post = new Post();
-            var commentList = new List<Comment>();
+            var tempModel = new Post();
+            var tepCommentList = new List<Comment>();
             var comment = new Comment
             {
-                Data = DateTime.UtcNow,
+                CreatedAtUtc = DateTime.UtcNow,
                 Author = User.Identity.Name,
                 Content = model.Content
             };
-            commentList.Add(comment);
+            tepCommentList.Add(comment);
 
-            post = await blogContext.Posts.Find(x => x.Id == ObjectId.Parse(model.PostId)).SingleAsync();
-            if (post.Comments != null)
+            tempModel = await blogContext.Posts.Find(x => x.Id == ObjectId.Parse(model.PostId)).SingleAsync();
+
+            if (tempModel.Comments != null)
             {
-                post.Comments.Add(comment);
+                tempModel.Comments.Add(comment);
             }
             else
             {
-                post.Comments = commentList;
+                tempModel.Comments = tepCommentList;
             }
-            var result = await blogContext.Posts.ReplaceOneAsync(x => x.Id == ObjectId.Parse(model.PostId), post);
+            var result = await blogContext.Posts.ReplaceOneAsync(x => x.Id == ObjectId.Parse(model.PostId), tempModel);
 
 
             return RedirectToAction("Post", new { id = model.PostId });
