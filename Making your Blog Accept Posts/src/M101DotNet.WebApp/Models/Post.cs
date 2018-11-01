@@ -12,8 +12,8 @@ namespace M101DotNet.WebApp.Models
         // XXX WORK HERE
         // add in the appropriate properties for a post
         // The homework instructions contain the schema.
-       
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
