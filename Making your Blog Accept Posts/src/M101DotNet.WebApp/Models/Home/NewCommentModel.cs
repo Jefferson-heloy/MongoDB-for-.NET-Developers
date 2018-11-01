@@ -15,5 +15,6 @@ namespace M101DotNet.WebApp.Models.Home
         [Required]
         [DataType(DataType.Text)]
         public string Content { get; set; }
+        
     }
 }

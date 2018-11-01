@@ -13,6 +13,6 @@ namespace M101DotNet.WebApp.Models
         // necessary schema.
         public string Author { get; set; }
         public string Content { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime CreatedAtUtc { get; set; }
     }
 }

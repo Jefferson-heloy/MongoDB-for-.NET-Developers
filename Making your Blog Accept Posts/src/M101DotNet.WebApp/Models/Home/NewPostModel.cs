@@ -16,6 +16,8 @@ namespace M101DotNet.WebApp.Models.Home
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         public string Tags { get; set; }
